@@ -1,0 +1,10 @@
+
+routefile = "C:/Users/new/Desktop/PAC_topics/PAC_topics/collection/MiniCollectionTopics.txt"
+
+
+myfile = open(routefile , "rt") # open MiniCollectionTopics.txt for reading text
+with open (routefile , 'rt') as myfile:  # Open lorem.txt for reading
+    for myline in myfile:              # For each line, read to a string,
+        print(myline) 
+
+             
