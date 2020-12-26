@@ -1,0 +1,68 @@
+import os
+from bs4 import BeautifulSoup
+
+routefile = "C:/Users/new/Desktop/PAC_topics/PAC_topics/collection/MiniCollectionTopics.txt" #path tou arxeiou minicollectiontxt
+xml_path ="C:/Users/new/Desktop/PAC_topics/PAC_topics/files30" #path tou fakelou me ta xml arxeia p exoun t periexomeno ton topics
+sgml_path="C:/Users/new/Desktop/PAC_topics/PAC_topics/sgml_threads"
+#01. Ανοίγω το αρχείο ΜiniCollection.txt
+#02. Για κάθε γραμμή στο αρχείο αυτό
+   #03. Μπές στον φάκελο PAC_topics και ψαξε τη γραμμη αυτη αν υπάρχει σαν αρχείο
+   #04.Αν υπάρχει
+    #05.Δημιούργησε το ερώτημα
+   #06.Αλλιώς
+    #Κλείσε το αρχείο και τον φάκελο
+cnt=0
+
+file = open(routefile,"r") #open the Minicollection File
+for line in file: #gia kathe grammi tou arxeiou
+   convi = line.replace('Test', '') #antikatestise th leksi test me nothing
+   conv =convi.strip() + ".xml"     #svise ola ta kena( ara menei mono to NUM tou eggrafou) kai prosthese to .xml sto string
+   for  files in os.walk(xml_path):  # gia kathe arxeio apo to top mexri to bottom tou fakelou files30
+      print(conv)                    # ektypose ton arithmo tou ekastote eggrafou
+      content = open(xml_path+"/"+conv,'r',encoding='utf8').read()  #anoikse kai diavase to antistoixo xml eggrafo
+      soup = BeautifulSoup(content, features = "xml") 
+      inv_title=soup.findAll("invention-title")  # vres m ola ta invention-title
+      abstract=soup.findAll("abstract") #vres mou ola ta abstract
+      f=open(sgml_path+"/"+"SGML_Topics.txt",'a+',encoding='utf8') #anoikse to fakelo SGML_Topics gia na dimiourgiseis to arxeio
+      f.write("<TOP>\n<NUM>"+os.path.splitext(conv)[0]+"</NUM>\n<TITLE>\n") #dimiourgia tou kathe erwthmatos
+      for text in inv_title: 
+        invt=text.getText()
+        f.write(invt+" ") 
+      for text in abstract:
+        abstr=text.getText()
+        f.write(abstr+" ")  
+      f.write("\n</TITLE>\n</TOP>\n") 
+
+
+file.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#os.path.basename(f.name)
+
+#myfile = open(routefile , "rt") # open MiniCollectionTopics.txt for reading text
+
+#with open (routefile , 'rt') as myfile:  # Open MiniCollectionTopics.txt for reading
+   # for myline in myfile:    #for each file in directory xml_path
+  #          #if file.rsplit('.', 1)[0] == myline: #if thisfilename==this line
+ #       for file in os.listdir(xml_path): 
+ #           filename = os.path.basename(file.name)
+ #           name1 = filename.split('.', 1)[0]        # For each line, split the name from ending
+ #           #if name1 == myline:
+ #           print(myline)
+          
+ #for root, dir, files in os.walk(search_path):
+ #     if filename in files:
